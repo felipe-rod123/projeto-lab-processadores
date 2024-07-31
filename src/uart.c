@@ -1,5 +1,6 @@
 #include "bcm.h" 
-#include "syscall.c"
+#include "syscall.h"
+
 
 void delay(int c)
 {

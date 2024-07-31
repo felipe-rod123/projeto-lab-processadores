@@ -1,6 +1,8 @@
 #include <sys/stat.h>
 #include <stdint.h>
 #include "uart.h"
+#include "syscall.h"
+
 
 extern uint32_t inicio_heap;
 
