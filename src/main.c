@@ -9,20 +9,15 @@ void main(void) {
       while (true)
       {
          val = smbus_read_byte(SENSOR_ADRESS, IDENTIFICATION_MODEL_ID);
-         printf("tentando identificar sensor...\n");
+         printf("tentando identificar sensor...\r\n");
          if (val == 0xEE) 
        { 
-       printf("sensor identificado!\n");
-       printf("val:%x", val);
-       printf("\n");
-       printf("\n");
-       printf("\n");
-       printf("\n");
-       printf("\n");
+       printf("sensor identificado!\r\n");
+       printf("val:%x\r\n", val);
        }
        else{
-       printf("ERRO\n");
+       printf("ERRO\r\n");
        }
-       delay(15000);
+       delay(150000);
       }
 }

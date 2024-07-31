@@ -1,4 +1,4 @@
-FONTES = boot.s uart.c main.c
+FONTES = boot.s uart.c main.c i2c.c syscall.c
 LDSCRIPT = linker.ld
 PROJECT = teste
 
@@ -20,7 +20,7 @@ OBJDMP = ${PREFIXO}objdump
 
 ASM_OPTIONS = -g
 C_OPTIONS = -march=armv7-a -mtune=cortex-a7 -g
-LD_OPTIONS = -lc -L/usr/lib/arm-none-eabi/newlib -lgcc -L/usr/lib/gcc/arm-none-eabi/10.3.1/
+LD_OPTIONS = -lc -L/usr/lib/arm-none-eabi/newlib -lgcc -L/usr/lib/gcc/arm-none-eabi/10.3.1/ #MUDAR VERSAO
 
 OBJ = $(FONTES:.s=.o)
 OBJETOS = $(OBJ:.c=.o)
