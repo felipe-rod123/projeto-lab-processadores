@@ -1,13 +1,102 @@
 .include "gpio.inc"
-
-// este dever ser o endereço 0x8000
-.text
+.section .init
 .global start
-
 start:
-   // inicia stack pointer
-   ldr sp, =stack_addr
 
+  /*
+   * Verifica priviégio de execução EL2 (HYP) ou EL1 (SVC)
+   */
+  mrs r0, cpsr
+  and r0, r0, #0x1f
+  cmp r0, #0x1a
+  bne continua
+
+  /*
+   * Sai do modo EL2 (HYP)
+   */
+  mrs r0, cpsr
+  bic r0, r0, #0x1f
+  orr r0, r0, #0x13
+  msr spsr_cxsf, r0
+  add lr, pc, #4       // aponta o rótulo 'continua'
+  msr ELR_hyp, lr
+  eret                 // 'retorna' do privilégio EL2 para o EL1
+
+continua:
+  /*
+   * Verifica o índice das CPUs
+   */
+  mrc p15,0,r0,c0,c0,5    // registrador MPIDR
+  ands r0, r0, #0xff
+  beq core0
+
+// Núcleos #1, #2 e #3 vão executar a partir daqui
+
+trava:
+  wfe
+  b trava
+
+// Execução do núcleo #0
+core0:
+  /*
+   * configura os stack pointers
+   */
+  mov r0, #0xD2     // Modo IRQ
+  msr cpsr_c,r0
+  mov sp, #0x4000
+
+  mov r0, #0xD3     // Modo SVC
+  msr cpsr_c,r0
+  mov sp, #0x8000
+
+  // Continua executando no modo supervisor (SVC), interrupções desabilitadas
+
+  /*
+   * Executa o sistema
+   */
+  b main_codigo
+
+/*
+ * Suspende o processamento por um número de ciclos
+ * param r0 Número de ciclos.
+ */
+ .text
+.globl delay
+delay:
+  subs r0, r0, #1
+  bne delay
+  mov pc, lr
+
+/*
+ * Habilita ou desabilita interrupções
+ * param r0 0 = desabilita, diferente de zero = habilita
+ */
+.globl enable_irq
+enable_irq:
+  movs r0, r0
+  beq disable
+  mrs r0, cpsr
+  bic r0, r0, #0x80
+  msr cpsr_c, r0
+  mov pc, lr
+disable:
+  mrs r0, cpsr
+  orr r0, r0, #0x80
+  msr cpsr_c, r0
+  mov pc, lr
+
+/*
+ * Lê o valor atual do CPSR
+ */
+.globl get_cpsr
+get_cpsr:
+  mrs r0, cpsr
+  mov pc, lr
+
+
+main_codigo:
+
+   bl uart_init 
    // configurar GPIO 21 como saída
    ldr r0, =GPFSEL2
    ldr r1, [r0]
@@ -39,10 +128,10 @@ start:
    //bl faz_borda_pwm_e_atualiza_r1
 
    // r1: hora de subir o sinal de pwm | hora de descer o sinal de pwm
-   // r2: hora de ativar timer | c
+   // r2: hora de ativar timer | 
 
    // inicia timer 1 
-
+   ldr r0, =0x3F003000 
    ldr r1,[r0,#4]
    add r1,r1,r6
    mov r4, #(1 << 1)
@@ -58,8 +147,8 @@ start:
 
 
 escuta:
+//bl printa_oi
 
-   
 //    condicao: tempo == r1
    str r1, [r8] 
    ldr r0, =0x3F003000 
@@ -91,7 +180,7 @@ escuta:
    ands r4, r4, #(1 << 20)
    CMP r4, #0 
    beq nao_ativou_20
-   bl delay
+   bl delay_igor
 
    ldr r0, =GPLEV0
    mov r4, #(1 << 20)
@@ -99,7 +188,7 @@ escuta:
    ands r4, r4, #(1 << 20)
    CMP r4, #0 
    beq nao_ativou_20
-   bl delay
+   bl delay_igor
 
    ldr r0, =GPLEV0
    mov r4, #(1 << 20)
@@ -107,7 +196,7 @@ escuta:
    ands r4, r4, #(1 << 20)
    CMP r4, #0 
    beq nao_ativou_20
-   bl delay
+   bl delay_igor
 
    ldr r0, =GPLEV0
    mov r4, #(1 << 20)
@@ -115,7 +204,7 @@ escuta:
    ands r4, r4, #(1 << 20)
    CMP r4, #0 
    beq nao_ativou_20
-   bl delay
+   bl delay_igor
 
    ativou_20: 
       ldr r0, =0x3F003000
@@ -153,7 +242,7 @@ escuta:
    ands r4, r4, #(1 << 20)
    CMP r4, #0 
    bne nao_desativou_20
-   bl delay
+   bl delay_igor
 
 
    ldr r0, =GPLEV0
@@ -162,7 +251,7 @@ escuta:
    ands r4, r4, #(1 << 20)
    CMP r4, #0 
    bne nao_desativou_20
-   bl delay
+   bl delay_igor
    
    ldr r0, =GPLEV0
    mov r4, #(1 << 20)
@@ -170,7 +259,7 @@ escuta:
    ands r4, r4, #(1 << 20)
    CMP r4, #0
    bne nao_desativou_20
-   bl delay
+   bl delay_igor
    
 
    desativou_20: 
@@ -265,7 +354,6 @@ faz_borda_pwm_e_atualiza_r2:
 
 
 apaga_21:
-   bl printa_oi
    push {r0, r1, lr}
    ldr r0, =GPCLR0
    mov r1, #(1 << 21)
@@ -291,6 +379,7 @@ apaga_26:
 
 acende_26:
    push {r0, r1, lr}
+   bl printa_oi
    ldr r0, =GPSET0
    mov r1, #(1 << 26)
    str r1, [r0]
@@ -300,7 +389,7 @@ acende_26:
 
 
 // creditos Igor
-delay:
+delay_igor:
     push {r0, lr}     @ preserva r0 e lr
     mov r0, #300       @ define o valor do delay
 delay_loop:

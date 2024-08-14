@@ -1,6 +1,6 @@
 FONTES =  kernel.c 
 LDSCRIPT = linker.ld
-PROJECT = teste
+PROJECT = kernel
 
 #
 # Arquivos de saída 

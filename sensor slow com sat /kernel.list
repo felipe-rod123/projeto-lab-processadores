@@ -1,0 +1,411 @@
+
+kernel.elf:     file format elf32-littlearm
+
+SYMBOL TABLE:
+00008000 l    d  .text	00000000 .text
+00000000 l    d  .ARM.attributes	00000000 .ARM.attributes
+00000000 l    d  .debug_line	00000000 .debug_line
+00000000 l    d  .debug_info	00000000 .debug_info
+00000000 l    d  .debug_abbrev	00000000 .debug_abbrev
+00000000 l    d  .debug_aranges	00000000 .debug_aranges
+00000000 l    d  .debug_str	00000000 .debug_str
+00000000 l    df *ABS*	00000000 kernel.o
+3f000000 l       *ABS*	00000000 PERIPH_BASE
+3f200000 l       *ABS*	00000000 GPIO_BASE
+3f200000 l       *ABS*	00000000 GPFSEL0
+3f200004 l       *ABS*	00000000 GPFSEL1
+3f200008 l       *ABS*	00000000 GPFSEL2
+3f20000c l       *ABS*	00000000 GPFSEL3
+3f200010 l       *ABS*	00000000 GPFSEL4
+3f200014 l       *ABS*	00000000 GPFSEL5
+3f20001c l       *ABS*	00000000 GPSET0
+3f200020 l       *ABS*	00000000 GPSET1
+3f200028 l       *ABS*	00000000 GPCLR0
+3f20002c l       *ABS*	00000000 GPCLR1
+3f200034 l       *ABS*	00000000 GPLEV0
+3f200038 l       *ABS*	00000000 GPLEV1
+3f200040 l       *ABS*	00000000 GPEDS0
+3f200044 l       *ABS*	00000000 GPEDS1
+3f20004c l       *ABS*	00000000 GPREN0
+3f200050 l       *ABS*	00000000 GPREN1
+3f200058 l       *ABS*	00000000 GPFEN0
+3f20005c l       *ABS*	00000000 GPFEN1
+3f200064 l       *ABS*	00000000 GPHEN0
+3f200068 l       *ABS*	00000000 GPHEN1
+3f200070 l       *ABS*	00000000 GPLEN0
+3f200074 l       *ABS*	00000000 GPLEN1
+3f20007c l       *ABS*	00000000 GPAREN0
+3f200080 l       *ABS*	00000000 GPAREN1
+3f200088 l       *ABS*	00000000 GPAFEN0
+3f20008c l       *ABS*	00000000 GPAFEN1
+3f200094 l       *ABS*	00000000 GPPUD
+3f200098 l       *ABS*	00000000 GPPUDCLK0
+3f20009c l       *ABS*	00000000 GPPUDCLK1
+00008074 l       .text	00000000 escuta
+0000808c l       .text	00000000 nao_tempo_igual_a_r1
+00008088 l       .text	00000000 tempo_igual_a_r1
+000081e0 l       .text	00000000 faz_borda_pwm_e_atualiza_r1
+000080a4 l       .text	00000000 nao_tempo_igual_a_r2
+000080a0 l       .text	00000000 tempo_igual_a_r2
+00008220 l       .text	00000000 faz_borda_pwm_e_atualiza_r2
+00008130 l       .text	00000000 nao_ativou_20
+000082c0 l       .text	00000000 delay
+0000811c l       .text	00000000 ativou_20
+00008130 l       .text	00000000 tem_1_
+0000812c l       .text	00000000 tem_0_
+000081dc l       .text	00000000 nao_desativou_20
+0000818c l       .text	00000000 desativou_20
+00008278 l       .text	00000000 acende_21
+000081bc l       .text	00000000 sem_bo
+000081b8 l       .text	00000000 com_bo
+000081d4 l       .text	00000000 tem_1
+000081c8 l       .text	00000000 tem_0
+00008210 l       .text	00000000 faz_borda_pwm_e_atualiza_r1_apagar
+00008218 l       .text	00000000 faz_borda_pwm_e_atualiza_r1_fim
+00008260 l       .text	00000000 apaga_21
+00008250 l       .text	00000000 faz_borda_pwm_e_atualiza_r2_apagar
+000082a8 l       .text	00000000 acende_26
+00008258 l       .text	00000000 faz_borda_pwm_e_atualiza_r2_fim
+00008290 l       .text	00000000 apaga_26
+000082c8 l       .text	00000000 delay_loop
+00009308 g       .text	00000000 stack_addr
+00008000 g       .text	00000000 start
+
+
+Contents of section .text:
+ 8000 d0d29fe5 d0029fe5 001090e5 3810c1e3  ............8...
+ 8010 081081e3 001080e5 bc029fe5 001090e5  ................
+ 8020 0717c1e3 011781e3 001080e5 a8029fe5  ................
+ 8030 001090e5 0710c1e3 001080e5 9c329fe5  .............2..
+ 8040 0960a0e3 98829fe5 98729fe5 0090a0e3  .`.......r......
+ 8050 041090e5 061081e0 0240a0e3 004080e5  .........@...@..
+ 8060 84029fe5 042090e5 032082e0 0840a0e3  ..... ... ...@..
+ 8070 004080e5 001088e5 6c029fe5 004090e5  .@......l....@..
+ 8080 020014e3 0000000a 540000eb 002087e5  ........T.... ..
+ 8090 54029fe5 004090e5 080014e3 0000000a  T....@..........
+ 80a0 5e0000eb 000059e3 2000001a 3c029fe5  ^.....Y. ...<...
+ 80b0 0146a0e3 004090e5 014614e2 000054e3  .F...@...F....T.
+ 80c0 1a00000a 7d0000eb 20029fe5 0146a0e3  ....}... ....F..
+ 80d0 004090e5 014614e2 000054e3 1300000a  .@...F....T.....
+ 80e0 760000eb 04029fe5 0146a0e3 004090e5  v........F...@..
+ 80f0 014614e2 000054e3 0c00000a 6f0000eb  .F....T.....o...
+ 8100 e8019fe5 0146a0e3 004090e5 014614e2  .....F...@...F..
+ 8110 000054e3 0500000a 680000eb c8019fe5  ..T.....h.......
+ 8120 049090e5 010016e2 0000001a ffffffea  ................
+ 8130 000059e3 2800000a b0019fe5 0146a0e3  ..Y.(........F..
+ 8140 004090e5 014614e2 000054e3 2200001a  .@...F....T."...
+ 8150 5a0000eb 94019fe5 0146a0e3 004090e5  Z........F...@..
+ 8160 014614e2 000054e3 1b00001a 530000eb  .F....T.....S...
+ 8170 78019fe5 0146a0e3 004090e5 014614e2  x....F...@...F..
+ 8180 000054e3 1400001a 4c0000eb 390000eb  ..T.....L...9...
+ 8190 54019fe5 044090e5 099044e0 000059e3  T....@....D...Y.
+ 81a0 0d0000ba 48019fe5 a990a0e1 8990a0e1  ....H...........
+ 81b0 090050e1 0000005a 38919fe5 094040e0  ..P....Z8....@@.
+ 81c0 010016e2 0200001a 006089e2 0090a0e3  .........`......
+ 81d0 010000ea 006084e2 0090a0e3 a4ffffea  .....`..........
+ 81e0 04e02de5 08519fe5 fc009fe5 041090e5  ..-..Q..........
+ 81f0 066045e0 061081e0 0240a0e3 004080e5  .`E......@...@..
+ 8200 010016e3 0100000a 1a0000eb 010000ea  ................
+ 8210 120000eb ffffffea 04e09de4 1eff2fe1  ............../.
+ 8220 04e02de5 d0509fe5 bc009fe5 042090e5  ..-..P....... ..
+ 8230 033045e0 032082e0 0840a0e3 004080e5  .0E.. ...@...@..
+ 8240 010013e3 0100000a 160000eb 010000ea  ................
+ 8250 0e0000eb ffffffea 04e09de4 1eff2fe1  ............../.
+ 8260 03402de9 94009fe5 0216a0e3 001080e5  .@-.............
+ 8270 0340bde8 1eff2fe1 03402de9 80009fe5  .@..../..@-.....
+ 8280 0216a0e3 001080e5 0340bde8 1eff2fe1  .........@..../.
+ 8290 03402de9 64009fe5 0113a0e3 001080e5  .@-.d...........
+ 82a0 0340bde8 1eff2fe1 03402de9 50009fe5  .@..../..@-.P...
+ 82b0 0113a0e3 001080e5 0340bde8 1eff2fe1  .........@..../.
+ 82c0 01402de9 4b0fa0e3 010050e2 fdffff1a  .@-.K.....P.....
+ 82d0 0140bde8 1eff2fe1 08930000 0800203f  .@..../....... ?
+ 82e0 4b420f00 1030003f 1830003f 0030003f  KB...0.?.0.?.0.?
+ 82f0 3400203f c1c62d00 b6c62d00 81841e00  4. ?..-...-.....
+ 8300 2800203f 1c00203f                    (. ?.. ?        
+Contents of section .ARM.attributes:
+ 0000 41150000 00616561 62690001 0b000000  A....aeabi......
+ 0010 06020801 0901                        ......          
+Contents of section .debug_line:
+ 0000 04010000 02001c00 00000201 fb0e0a00  ................
+ 0010 01010101 00000001 006b6572 6e656c2e  .........kernel.
+ 0020 73000000 00000005 02008000 00172e2c  s..............,
+ 0030 2c2c2c2e 2c2c2c2c 2e2c2c2c 2e2c2c2c  ,,,.,,,,.,,,.,,,
+ 0040 2d332c2c 2c2e2c2c 2c2c332c 2c2c2c2d  -3,,,.,,,,3,,,,-
+ 0050 312c2c2c 2c2d2e2c 2d2c2c2c 2c2c2c2d  1,,,,-.,-,,,,,,-
+ 0060 2c2c2c2c 2c2c2d2c 2c2c2c2c 2c2d2c2c  ,,,,,,-,,,,,,-,,
+ 0070 2c2c2c2c 2e2c2c2c 03092b03 0c2b2c2f  ,,,,.,,,..+..+,/
+ 0080 2c2c2c2c 2c2c2e2c 2c2c2c2c 2c2d2c2c  ,,,,,,.,,,,,,-,,
+ 0090 2c2c2c2c 2f2c2c2d 2d2c2e2c 2c2c2c2d  ,,,,/,,--,.,,,,-
+ 00a0 2d2c2c2e 2f2d2d2e 2d2f2c2c 2c2c2c2d  -,,./--.-/,,,,,-
+ 00b0 2c2d2c2c 2c2d2c2d 2c302c2c 2c2c2c2d  ,-,,,-,-,0,,,,,-
+ 00c0 2c2d2c2c 2c2d2c2d 2c332c2c 2c2c2c2e  ,-,,,-,-,3,,,,,.
+ 00d0 2c2c2c2c 2c2e2c2c 2c2c2c2e 2c2c2c2c  ,,,,,.,,,,,.,,,,
+ 00e0 2c312c2d 2c2c2c03 d57d2b2e 03142b2d  ,1,-,,,..}+...+-
+ 00f0 2c03102b 03242b03 e3002b31 03312b03  ,..+.$+...+1.1+.
+ 0100 1b2b3302 02000101                    .+3.....        
+Contents of section .debug_info:
+ 0000 22000000 02000000 00000401 00000000  "...............
+ 0010 00800000 08830000 00000000 09000000  ................
+ 0020 44000000 0180                        D.....          
+Contents of section .debug_abbrev:
+ 0000 01110010 06110112 01030e1b 0e250e13  .............%..
+ 0010 05000000                             ....            
+Contents of section .debug_aranges:
+ 0000 1c000000 02000000 00000400 00000000  ................
+ 0010 00800000 08030000 00000000 00000000  ................
+Contents of section .debug_str:
+ 0000 6b65726e 656c2e73 002f686f 6d652f69  kernel.s./home/i
+ 0010 616e2f63 2f70726f 6a65746f 2d6c6162  an/c/projeto-lab
+ 0020 2d70726f 63657373 61646f72 65732f73  -processadores/s
+ 0030 656e736f 7220736c 6f772063 6f6d2073  ensor slow com s
+ 0040 61742000 474e5520 41532032 2e343200  at .GNU AS 2.42.
+
+Disassembly of section .text:
+
+00008000 <start>:
+    8000:	e59fd2d0 	ldr	sp, [pc, #720]	@ 82d8 <delay_loop+0x10>
+    8004:	e59f02d0 	ldr	r0, [pc, #720]	@ 82dc <delay_loop+0x14>
+    8008:	e5901000 	ldr	r1, [r0]
+    800c:	e3c11038 	bic	r1, r1, #56	@ 0x38
+    8010:	e3811008 	orr	r1, r1, #8
+    8014:	e5801000 	str	r1, [r0]
+    8018:	e59f02bc 	ldr	r0, [pc, #700]	@ 82dc <delay_loop+0x14>
+    801c:	e5901000 	ldr	r1, [r0]
+    8020:	e3c11707 	bic	r1, r1, #1835008	@ 0x1c0000
+    8024:	e3811701 	orr	r1, r1, #262144	@ 0x40000
+    8028:	e5801000 	str	r1, [r0]
+    802c:	e59f02a8 	ldr	r0, [pc, #680]	@ 82dc <delay_loop+0x14>
+    8030:	e5901000 	ldr	r1, [r0]
+    8034:	e3c11007 	bic	r1, r1, #7
+    8038:	e5801000 	str	r1, [r0]
+    803c:	e59f329c 	ldr	r3, [pc, #668]	@ 82e0 <delay_loop+0x18>
+    8040:	e3a06009 	mov	r6, #9
+    8044:	e59f8298 	ldr	r8, [pc, #664]	@ 82e4 <delay_loop+0x1c>
+    8048:	e59f7298 	ldr	r7, [pc, #664]	@ 82e8 <delay_loop+0x20>
+    804c:	e3a09000 	mov	r9, #0
+    8050:	e5901004 	ldr	r1, [r0, #4]
+    8054:	e0811006 	add	r1, r1, r6
+    8058:	e3a04002 	mov	r4, #2
+    805c:	e5804000 	str	r4, [r0]
+    8060:	e59f0284 	ldr	r0, [pc, #644]	@ 82ec <delay_loop+0x24>
+    8064:	e5902004 	ldr	r2, [r0, #4]
+    8068:	e0822003 	add	r2, r2, r3
+    806c:	e3a04008 	mov	r4, #8
+    8070:	e5804000 	str	r4, [r0]
+
+00008074 <escuta>:
+    8074:	e5881000 	str	r1, [r8]
+    8078:	e59f026c 	ldr	r0, [pc, #620]	@ 82ec <delay_loop+0x24>
+    807c:	e5904000 	ldr	r4, [r0]
+    8080:	e3140002 	tst	r4, #2
+    8084:	0a000000 	beq	808c <nao_tempo_igual_a_r1>
+
+00008088 <tempo_igual_a_r1>:
+    8088:	eb000054 	bl	81e0 <faz_borda_pwm_e_atualiza_r1>
+
+0000808c <nao_tempo_igual_a_r1>:
+    808c:	e5872000 	str	r2, [r7]
+    8090:	e59f0254 	ldr	r0, [pc, #596]	@ 82ec <delay_loop+0x24>
+    8094:	e5904000 	ldr	r4, [r0]
+    8098:	e3140008 	tst	r4, #8
+    809c:	0a000000 	beq	80a4 <nao_tempo_igual_a_r2>
+
+000080a0 <tempo_igual_a_r2>:
+    80a0:	eb00005e 	bl	8220 <faz_borda_pwm_e_atualiza_r2>
+
+000080a4 <nao_tempo_igual_a_r2>:
+    80a4:	e3590000 	cmp	r9, #0
+    80a8:	1a000020 	bne	8130 <nao_ativou_20>
+    80ac:	e59f023c 	ldr	r0, [pc, #572]	@ 82f0 <delay_loop+0x28>
+    80b0:	e3a04601 	mov	r4, #1048576	@ 0x100000
+    80b4:	e5904000 	ldr	r4, [r0]
+    80b8:	e2144601 	ands	r4, r4, #1048576	@ 0x100000
+    80bc:	e3540000 	cmp	r4, #0
+    80c0:	0a00001a 	beq	8130 <nao_ativou_20>
+    80c4:	eb00007d 	bl	82c0 <delay>
+    80c8:	e59f0220 	ldr	r0, [pc, #544]	@ 82f0 <delay_loop+0x28>
+    80cc:	e3a04601 	mov	r4, #1048576	@ 0x100000
+    80d0:	e5904000 	ldr	r4, [r0]
+    80d4:	e2144601 	ands	r4, r4, #1048576	@ 0x100000
+    80d8:	e3540000 	cmp	r4, #0
+    80dc:	0a000013 	beq	8130 <nao_ativou_20>
+    80e0:	eb000076 	bl	82c0 <delay>
+    80e4:	e59f0204 	ldr	r0, [pc, #516]	@ 82f0 <delay_loop+0x28>
+    80e8:	e3a04601 	mov	r4, #1048576	@ 0x100000
+    80ec:	e5904000 	ldr	r4, [r0]
+    80f0:	e2144601 	ands	r4, r4, #1048576	@ 0x100000
+    80f4:	e3540000 	cmp	r4, #0
+    80f8:	0a00000c 	beq	8130 <nao_ativou_20>
+    80fc:	eb00006f 	bl	82c0 <delay>
+    8100:	e59f01e8 	ldr	r0, [pc, #488]	@ 82f0 <delay_loop+0x28>
+    8104:	e3a04601 	mov	r4, #1048576	@ 0x100000
+    8108:	e5904000 	ldr	r4, [r0]
+    810c:	e2144601 	ands	r4, r4, #1048576	@ 0x100000
+    8110:	e3540000 	cmp	r4, #0
+    8114:	0a000005 	beq	8130 <nao_ativou_20>
+    8118:	eb000068 	bl	82c0 <delay>
+
+0000811c <ativou_20>:
+    811c:	e59f01c8 	ldr	r0, [pc, #456]	@ 82ec <delay_loop+0x24>
+    8120:	e5909004 	ldr	r9, [r0, #4]
+    8124:	e2160001 	ands	r0, r6, #1
+    8128:	1a000000 	bne	8130 <nao_ativou_20>
+
+0000812c <tem_0_>:
+    812c:	eaffffff 	b	8130 <nao_ativou_20>
+
+00008130 <nao_ativou_20>:
+    8130:	e3590000 	cmp	r9, #0
+    8134:	0a000028 	beq	81dc <nao_desativou_20>
+    8138:	e59f01b0 	ldr	r0, [pc, #432]	@ 82f0 <delay_loop+0x28>
+    813c:	e3a04601 	mov	r4, #1048576	@ 0x100000
+    8140:	e5904000 	ldr	r4, [r0]
+    8144:	e2144601 	ands	r4, r4, #1048576	@ 0x100000
+    8148:	e3540000 	cmp	r4, #0
+    814c:	1a000022 	bne	81dc <nao_desativou_20>
+    8150:	eb00005a 	bl	82c0 <delay>
+    8154:	e59f0194 	ldr	r0, [pc, #404]	@ 82f0 <delay_loop+0x28>
+    8158:	e3a04601 	mov	r4, #1048576	@ 0x100000
+    815c:	e5904000 	ldr	r4, [r0]
+    8160:	e2144601 	ands	r4, r4, #1048576	@ 0x100000
+    8164:	e3540000 	cmp	r4, #0
+    8168:	1a00001b 	bne	81dc <nao_desativou_20>
+    816c:	eb000053 	bl	82c0 <delay>
+    8170:	e59f0178 	ldr	r0, [pc, #376]	@ 82f0 <delay_loop+0x28>
+    8174:	e3a04601 	mov	r4, #1048576	@ 0x100000
+    8178:	e5904000 	ldr	r4, [r0]
+    817c:	e2144601 	ands	r4, r4, #1048576	@ 0x100000
+    8180:	e3540000 	cmp	r4, #0
+    8184:	1a000014 	bne	81dc <nao_desativou_20>
+    8188:	eb00004c 	bl	82c0 <delay>
+
+0000818c <desativou_20>:
+    818c:	eb000039 	bl	8278 <acende_21>
+    8190:	e59f0154 	ldr	r0, [pc, #340]	@ 82ec <delay_loop+0x24>
+    8194:	e5904004 	ldr	r4, [r0, #4]
+    8198:	e0449009 	sub	r9, r4, r9
+    819c:	e3590000 	cmp	r9, #0
+    81a0:	ba00000d 	blt	81dc <nao_desativou_20>
+    81a4:	e59f0148 	ldr	r0, [pc, #328]	@ 82f4 <delay_loop+0x2c>
+    81a8:	e1a090a9 	lsr	r9, r9, #1
+    81ac:	e1a09089 	lsl	r9, r9, #1
+    81b0:	e1500009 	cmp	r0, r9
+    81b4:	5a000000 	bpl	81bc <sem_bo>
+
+000081b8 <com_bo>:
+    81b8:	e59f9138 	ldr	r9, [pc, #312]	@ 82f8 <delay_loop+0x30>
+
+000081bc <sem_bo>:
+    81bc:	e0404009 	sub	r4, r0, r9
+    81c0:	e2160001 	ands	r0, r6, #1
+    81c4:	1a000002 	bne	81d4 <tem_1>
+
+000081c8 <tem_0>:
+    81c8:	e2896000 	add	r6, r9, #0
+    81cc:	e3a09000 	mov	r9, #0
+    81d0:	ea000001 	b	81dc <nao_desativou_20>
+
+000081d4 <tem_1>:
+    81d4:	e2846000 	add	r6, r4, #0
+    81d8:	e3a09000 	mov	r9, #0
+
+000081dc <nao_desativou_20>:
+    81dc:	eaffffa4 	b	8074 <escuta>
+
+000081e0 <faz_borda_pwm_e_atualiza_r1>:
+    81e0:	e52de004 	push	{lr}		@ (str lr, [sp, #-4]!)
+    81e4:	e59f5108 	ldr	r5, [pc, #264]	@ 82f4 <delay_loop+0x2c>
+    81e8:	e59f00fc 	ldr	r0, [pc, #252]	@ 82ec <delay_loop+0x24>
+    81ec:	e5901004 	ldr	r1, [r0, #4]
+    81f0:	e0456006 	sub	r6, r5, r6
+    81f4:	e0811006 	add	r1, r1, r6
+    81f8:	e3a04002 	mov	r4, #2
+    81fc:	e5804000 	str	r4, [r0]
+    8200:	e3160001 	tst	r6, #1
+    8204:	0a000001 	beq	8210 <faz_borda_pwm_e_atualiza_r1_apagar>
+    8208:	eb00001a 	bl	8278 <acende_21>
+    820c:	ea000001 	b	8218 <faz_borda_pwm_e_atualiza_r1_fim>
+
+00008210 <faz_borda_pwm_e_atualiza_r1_apagar>:
+    8210:	eb000012 	bl	8260 <apaga_21>
+    8214:	eaffffff 	b	8218 <faz_borda_pwm_e_atualiza_r1_fim>
+
+00008218 <faz_borda_pwm_e_atualiza_r1_fim>:
+    8218:	e49de004 	pop	{lr}		@ (ldr lr, [sp], #4)
+    821c:	e12fff1e 	bx	lr
+
+00008220 <faz_borda_pwm_e_atualiza_r2>:
+    8220:	e52de004 	push	{lr}		@ (str lr, [sp, #-4]!)
+    8224:	e59f50d0 	ldr	r5, [pc, #208]	@ 82fc <delay_loop+0x34>
+    8228:	e59f00bc 	ldr	r0, [pc, #188]	@ 82ec <delay_loop+0x24>
+    822c:	e5902004 	ldr	r2, [r0, #4]
+    8230:	e0453003 	sub	r3, r5, r3
+    8234:	e0822003 	add	r2, r2, r3
+    8238:	e3a04008 	mov	r4, #8
+    823c:	e5804000 	str	r4, [r0]
+    8240:	e3130001 	tst	r3, #1
+    8244:	0a000001 	beq	8250 <faz_borda_pwm_e_atualiza_r2_apagar>
+    8248:	eb000016 	bl	82a8 <acende_26>
+    824c:	ea000001 	b	8258 <faz_borda_pwm_e_atualiza_r2_fim>
+
+00008250 <faz_borda_pwm_e_atualiza_r2_apagar>:
+    8250:	eb00000e 	bl	8290 <apaga_26>
+    8254:	eaffffff 	b	8258 <faz_borda_pwm_e_atualiza_r2_fim>
+
+00008258 <faz_borda_pwm_e_atualiza_r2_fim>:
+    8258:	e49de004 	pop	{lr}		@ (ldr lr, [sp], #4)
+    825c:	e12fff1e 	bx	lr
+
+00008260 <apaga_21>:
+    8260:	e92d4003 	push	{r0, r1, lr}
+    8264:	e59f0094 	ldr	r0, [pc, #148]	@ 8300 <delay_loop+0x38>
+    8268:	e3a01602 	mov	r1, #2097152	@ 0x200000
+    826c:	e5801000 	str	r1, [r0]
+    8270:	e8bd4003 	pop	{r0, r1, lr}
+    8274:	e12fff1e 	bx	lr
+
+00008278 <acende_21>:
+    8278:	e92d4003 	push	{r0, r1, lr}
+    827c:	e59f0080 	ldr	r0, [pc, #128]	@ 8304 <delay_loop+0x3c>
+    8280:	e3a01602 	mov	r1, #2097152	@ 0x200000
+    8284:	e5801000 	str	r1, [r0]
+    8288:	e8bd4003 	pop	{r0, r1, lr}
+    828c:	e12fff1e 	bx	lr
+
+00008290 <apaga_26>:
+    8290:	e92d4003 	push	{r0, r1, lr}
+    8294:	e59f0064 	ldr	r0, [pc, #100]	@ 8300 <delay_loop+0x38>
+    8298:	e3a01301 	mov	r1, #67108864	@ 0x4000000
+    829c:	e5801000 	str	r1, [r0]
+    82a0:	e8bd4003 	pop	{r0, r1, lr}
+    82a4:	e12fff1e 	bx	lr
+
+000082a8 <acende_26>:
+    82a8:	e92d4003 	push	{r0, r1, lr}
+    82ac:	e59f0050 	ldr	r0, [pc, #80]	@ 8304 <delay_loop+0x3c>
+    82b0:	e3a01301 	mov	r1, #67108864	@ 0x4000000
+    82b4:	e5801000 	str	r1, [r0]
+    82b8:	e8bd4003 	pop	{r0, r1, lr}
+    82bc:	e12fff1e 	bx	lr
+
+000082c0 <delay>:
+    82c0:	e92d4001 	push	{r0, lr}
+    82c4:	e3a00f4b 	mov	r0, #300	@ 0x12c
+
+000082c8 <delay_loop>:
+    82c8:	e2500001 	subs	r0, r0, #1
+    82cc:	1afffffd 	bne	82c8 <delay_loop>
+    82d0:	e8bd4001 	pop	{r0, lr}
+    82d4:	e12fff1e 	bx	lr
+    82d8:	00009308 	.word	0x00009308
+    82dc:	3f200008 	.word	0x3f200008
+    82e0:	000f424b 	.word	0x000f424b
+    82e4:	3f003010 	.word	0x3f003010
+    82e8:	3f003018 	.word	0x3f003018
+    82ec:	3f003000 	.word	0x3f003000
+    82f0:	3f200034 	.word	0x3f200034
+    82f4:	002dc6c1 	.word	0x002dc6c1
+    82f8:	002dc6b6 	.word	0x002dc6b6
+    82fc:	001e8481 	.word	0x001e8481
+    8300:	3f200028 	.word	0x3f200028
+    8304:	3f20001c 	.word	0x3f20001c
