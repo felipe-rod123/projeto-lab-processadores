@@ -115,7 +115,10 @@ int distancia_em_mm_dada_duracao_echo(int duracao_echo_em_micro_segundos)
 }
 
 
-
+int media_de_de(int d)
+{
+   //TODO! MUDAR AQUI
+}
 
 
 

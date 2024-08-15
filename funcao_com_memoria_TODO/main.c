@@ -71,19 +71,4 @@ uint8_t uart_getc(void) {
  * Ponto de entrada do programa.
  * Pisca led e cumprimenta o usuário pela uart.
  */
-int main(void) {
-   // LED no gpio 47
-   uint32_t fsel = GPIO_REG(gpfsel[4]);
-   GPIO_REG(gpfsel[4]) = (fsel & (~(0x7 << 21))) | (1 << 21);
-   uart_init();
-
-   for(;;) {
-      GPIO_REG(gpset[1]) = (1 << (47-32));
-      delay(1000000);
-      GPIO_REG(gpclr[1]) = (1 << (47-32));
-      delay(1000000);
-      uart_puts(msg);
-   }
-   return 0;
-}
 
