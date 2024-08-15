@@ -74,4 +74,5 @@ uint8_t uart_getc(void) {
 
 int media_de_de(int d)
 {
-   //TODO! MUDAR AQUI
+   //TODO! MUDAR AQUI 
+}
