@@ -67,25 +67,6 @@ uint8_t uart_getc(void) {
    return MU_REG(io);
 }
 
-/**
- * Ponto de entrada do programa.
- * Pisca led e cumprimenta o usuário pela uart.
- */
-int main(void) {
-   // LED no gpio 47
-   uint32_t fsel = GPIO_REG(gpfsel[4]);
-   GPIO_REG(gpfsel[4]) = (fsel & (~(0x7 << 21))) | (1 << 21);
-   uart_init();
-
-   for(;;) {
-      GPIO_REG(gpset[1]) = (1 << (47-32));
-      delay(1000000);
-      GPIO_REG(gpclr[1]) = (1 << (47-32));
-      delay(1000000);
-      uart_puts(msg);
-   }
-   return 0;
-}
 
 
 
@@ -104,21 +85,57 @@ void printa_oi(int q) {
 }
 
 
-uint8_t printa_1_o_por_ms(int q) 
+int periodo_alto_pwm_em_micro_segundos_dado_angulo(int angulo_em_graus)
+{
+   // ang max em graus = 90; 
+   // ang min em graus = -90;
+   // periodo max em micro s  = 2000;
+   // periodo min em micro s  = 1000;
+   // periodo'(ang) é constante
+   // => (angulo_em_graus*500)/90 + 1500
+   return (angulo_em_graus*500)/90 + 1500;
+}
+
+int distancia_em_mm_dada_duracao_echo(int duracao_echo_em_micro_segundos)
+{
+   // duracao echo em s = duracao echo em micro s/1000000
+   // velocidade do som em m/s = 343
+   // distancia em mm = 1000 * distancia  em m 
+   // 2 * distancia em m = ( velocidade do som em m/s ) * echo em s
+
+   // => distancia em mm  = (343 * echo/1000000)*1000/2 =
+   if (( (duracao_echo_em_micro_segundos*343)/2000) < 160 )
+   { 
+      return (duracao_echo_em_micro_segundos*343)/2000;
+   }
+   else
+   {
+      return -1;
+   }
+}
+
+
+
+
+
+
+int printa_1_o_por_ms(int q) 
 {
    uint8_t c = '.';
    int i = 0;
-   for (i =0;i <q; i+=10) // 1000
+   int distancia_em_mm =  distancia_em_mm_dada_duracao_echo(q);
+   for (i =0;i <=distancia_em_mm; i+=1) // 1000
    {
       uart_putc(c);
    }
    c = '\n';
    uart_putc(c);
-   int pwm = q + 1000;
-   if (pwm > 2000)
+   if (distancia_em_mm == -1)
    {
-      pwm = 2000;
+      c = 'o';
+      uart_putc(c);
+      return  periodo_alto_pwm_em_micro_segundos_dado_angulo(9000);
    }
-   return q;
-   return 20001-pwm;
+
+   return  periodo_alto_pwm_em_micro_segundos_dado_angulo(0);
 }

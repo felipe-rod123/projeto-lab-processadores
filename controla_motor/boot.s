@@ -1,6 +1,11 @@
 .include "gpio.inc"
 .section .init
 .global start
+
+
+.equ PERIODO_PWM, 20001
+.equ MAXIMO_PERIODO_ALTO_PWM, 20001
+
 start:
 
   /*
@@ -94,6 +99,8 @@ get_cpsr:
   mov pc, lr
 
 
+
+
 main_codigo:
 
    bl uart_init 
@@ -119,7 +126,7 @@ main_codigo:
 
 
    ldr r3, =#0000011 // tempo em low de pwm tem que ser par !! // em cima do gnd 
-   ldr r6, =#0001501 // tempo em low de pwm // !! tem que ser par !!  
+   ldr r6, =#0010001 // tempo em low de pwm // !! tem que ser par !!  
    ldr r8, =0x3F003010 // endereco do compare register 1
    ldr r7, =0x3F003018 // endereco do compare register 2
 
@@ -144,6 +151,13 @@ main_codigo:
    mov r4, #(1 << 3)
    str r4, [r0, #0x00] // limpa flag
 
+
+
+// detecta a hora de descer a borda de pwm
+
+// detecta a hora de descer a subir de pwm
+
+// o triger é um pwm que fica 11 microsegundos ativo em um perido de 2 segundos: __________________________######### 
 
 
 escuta:
@@ -212,6 +226,7 @@ escuta:
      mov r0, #10
      bl printa_oi
      pop {r0-r11, lr}
+
       ldr r0, =0x3F003000
       ldr r9,[r0,#4] // r9 = t
       ands r0, r6, #1
@@ -282,35 +297,34 @@ escuta:
       cmp r9 , #0000000
       blt nao_desativou_20
      
-     push {r0-r8, r10, r11, lr}
+     push {r1-r11, lr}
      mov r0, r9
      bl printa_1_o_por_ms
+     pop {r1-r11, lr}
      mov r9, r0
-     pop {r0-r8, r10, r11, lr}
 
-      ldr r0, =#3000001
+      ldr r0, =MAXIMO_PERIODO_ALTO_PWM
       LSR r9, r9, #1
-      LSL r9, r9, #1 
+      LSL r9, r9, #1
+      add r9, r9, #1
+
       cmp r0, r9
       bpl sem_bo
-      com_bo: 
-         ldr r9 ,=#2999990
+      com_bo:
+         ldr r9, =#0000000 
+         bl desativou_mas_valor_estourou
       sem_bo:
-      
-      //forcando pwm motor 
-      //ldr r9 ,=#0001501
-
-      push {r0}
+         
       ldr r0, =0x3F003000 
       ldr r4,[r0,#4] // R4 = T
-      pop {r0}
-      
+
+      ldr r0, =PERIODO_PWM
       sub r4, r0, r9
       ands r0, r6, #1
       bne tem_1
    
       tem_0:     
-         add r6, r9, #0
+         add r6, r4, #0
          
          //ldr r6, =#0500000 
          //bl acende_21
@@ -318,19 +332,19 @@ escuta:
          
          b nao_desativou_20
       tem_1:
-         add r6, r4, #0
+         add r6, r9, #0
          //ldr r6, =#2500001 
          //bl acende_21
          ldr r9, =#0000000    
-   nao_desativou_20: 
+   nao_desativou_20:
+   desativou_mas_valor_estourou:
+
 b escuta
 
 
 faz_borda_pwm_e_atualiza_r1:
    push {lr}
-   //ldr r5, =#0020001 // tempo total de pwm   // !!tem que ser impar!!
-   ldr r5, =#3020001 // tempo total de pwm   // !!tem que ser impar!!
-   
+   ldr r5, = PERIODO_PWM // tempo total de pwm   // !!tem que ser impar!!
    ldr r0, =0x3F003000 
    ldr r1,[r0,#4]
    sub r6, r5, r6
@@ -405,14 +419,7 @@ apaga_26:
    bx lr
 
 acende_26:
-   push {r0, r1, lr}
-
-//   push {r0-r11, lr}
-//   mov r0, #10
-//   bl printa_oi
-//   pop {r0-r11, lr}
-   
-   
+   push {r0, r1, lr}   
    ldr r0, =GPSET0
    mov r1, #(1 << 26)
    str r1, [r0]

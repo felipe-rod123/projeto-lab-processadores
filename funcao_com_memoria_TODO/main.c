@@ -87,38 +87,3 @@ int main(void) {
    return 0;
 }
 
-
-
-   
-void printa_oi(int q) {
-   return ;
-   uint8_t c = 'o';
-   int i = 0;
-   for (i =0;i <q; i++)
-   {
-      uart_putc(c);
-   }
-   c = '\n';
-   uart_putc(c);
-   return ;
-}
-
-
-uint8_t printa_1_o_por_ms(int q) 
-{
-   uint8_t c = '.';
-   int i = 0;
-   for (i =0;i <q; i+=10) // 1000
-   {
-      uart_putc(c);
-   }
-   c = '\n';
-   uart_putc(c);
-   int pwm = q + 1000;
-   if (pwm > 2000)
-   {
-      pwm = 2000;
-   }
-   return q;
-   return 20001-pwm;
-}
