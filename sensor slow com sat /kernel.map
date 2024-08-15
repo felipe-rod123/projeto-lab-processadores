@@ -58,8 +58,8 @@ LOAD linker stubs
  .ARM.attributes
                 0x00000000       0x16 kernel.o
 
-.debug_line     0x00000000      0x108
- .debug_line    0x00000000      0x108 kernel.o
+.debug_line     0x00000000      0x10a
+ .debug_line    0x00000000      0x10a kernel.o
 
 .debug_info     0x00000000       0x26
  .debug_info    0x00000000       0x26 kernel.o

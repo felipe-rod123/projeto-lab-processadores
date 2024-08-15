@@ -265,7 +265,6 @@ faz_borda_pwm_e_atualiza_r2:
 
 
 apaga_21:
-   bl printa_oi
    push {r0, r1, lr}
    ldr r0, =GPCLR0
    mov r1, #(1 << 21)
