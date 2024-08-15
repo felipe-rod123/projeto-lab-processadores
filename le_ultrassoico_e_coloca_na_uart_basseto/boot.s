@@ -1,4 +1,5 @@
 .include "gpio.inc"
+.extern angulo_do_motor
 .section .init
 .global start
 start:
@@ -424,3 +425,32 @@ delay_loop:
     bne delay_loop    @ se não zero, continua no loop
     pop {r0, lr}      @ restaura r0 e lr
     bx lr
+
+media_distancias:
+  ldr r0, =GPLEV0        
+  ldr r1, [r0]
+  tst r1, #(1 << 20) // le GPIO 20
+  push {r1-r11, lr}  
+  bl media_de_d
+  pop {r1-r11, lr}
+
+  mov r9 , r0 // valor esperado media_de_d(90) =  (0 + 0 +90)/3 = 30  
+  //...
+  mov r0, #60// le 60
+  push {r1-r11, lr}  
+  bl media_de_d
+  pop {r1-r11, lr}
+
+  mov r9 , r0 // valor esperado media_de_d(60) =  (0 + 60 +90)/3 = 50
+
+
+  mov r0, #75 // le 75
+  push {r1-r11, lr}  
+  bl media_de_d
+  pop {r1-r11, lr}
+
+  mov r9 , r0 // valor esperado media_de_d(75) =  (75 + 60 +90)/3 = 75
+  mov r0, r9
+  bl angulo_do_motor
+
+
