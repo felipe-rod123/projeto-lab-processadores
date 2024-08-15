@@ -72,3 +72,6 @@ uint8_t uart_getc(void) {
  * Pisca led e cumprimenta o usuário pela uart.
  */
 
+int media_de_de(int d)
+{
+   //TODO! MUDAR AQUI
