@@ -5,7 +5,7 @@
 
 .equ PERIODO_PWM, 20001
 .equ MAXIMO_PERIODO_ALTO_PWM, 20001
-.equ PERIODICIDADE_TRIGER, 1000001
+.equ PERIODICIDADE_TRIGER, 0150001
 start:
 
   /*
@@ -299,7 +299,7 @@ escuta:
      
      push {r1-r11, lr}
      mov r0, r9
-     bl printa_1_o_por_ms
+     bl controle
      pop {r1-r11, lr}
      mov r9, r0
 

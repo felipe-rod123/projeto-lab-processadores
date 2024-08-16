@@ -3,13 +3,26 @@
 #include "bcm.h"
 
 char msg[] = "Hello\r\n";
-
+int vetor_medida_3[12] = {10,10,10,10,10,10,10,10,10,10,10,10};
 void delay(uint32_t dur);
 
 /**
  * Configura a mini-uart para 115200
  */
 void uart_init(void) {
+   vetor_medida_3[0] = 90;
+   vetor_medida_3[1] = 90;
+   vetor_medida_3[2] = 90;
+   vetor_medida_3[3] = 90;
+   vetor_medida_3[4] = 90;
+   vetor_medida_3[5] = 90;
+   vetor_medida_3[6] = 90;
+   vetor_medida_3[7] = 90;
+   vetor_medida_3[8] = 90;
+   vetor_medida_3[9] = 90;
+   vetor_medida_3[10] = 90;
+   vetor_medida_3[11] = 90;
+
    /*
     * Configura os GPIO 14 e 15 com a função alternativa 2 (UART).
     */
@@ -69,20 +82,12 @@ uint8_t uart_getc(void) {
 
 
 
-
-   
 void printa_oi(int q) {
-   return ;
-   uint8_t c = 'o';
-   int i = 0;
-   for (i =0;i <q; i++)
-   {
-      uart_putc(c);
-   }
-   c = '\n';
-   uart_putc(c);
+   
    return ;
 }
+
+   
 
 
 int periodo_alto_pwm_em_micro_segundos_dado_angulo(int angulo_em_graus)
@@ -93,6 +98,15 @@ int periodo_alto_pwm_em_micro_segundos_dado_angulo(int angulo_em_graus)
    // periodo min em micro s  = 1000;
    // periodo'(ang) é constante
    // => (angulo_em_graus*500)/90 + 1500
+   if  (angulo_em_graus > 90)
+   {
+      return (90*500)/90 + 1500;
+   }
+   if  (angulo_em_graus < -90)
+   {
+      return (-90*500)/90 + 1500;
+   }
+
    return (angulo_em_graus*500)/90 + 1500;
 }
 
@@ -116,13 +130,13 @@ int distancia_em_mm_dada_duracao_echo(int duracao_echo_em_micro_segundos)
 
 
 
-
-
-int printa_1_o_por_ms(int q) 
+int controle(int largura_echo_em_micro_segundos) 
 {
+
    uint8_t c = '.';
+
    int i = 0;
-   int distancia_em_mm =  distancia_em_mm_dada_duracao_echo(q);
+   int distancia_em_mm =  distancia_em_mm_dada_duracao_echo(largura_echo_em_micro_segundos);
    for (i =0;i <=distancia_em_mm; i+=1) // 1000
    {
       uart_putc(c);
@@ -148,9 +162,62 @@ int printa_1_o_por_ms(int q)
       uart_putc(c);
       return  periodo_alto_pwm_em_micro_segundos_dado_angulo(9900);
    }
-   int ang = ((distancia_em_mm-97)*(90-(-90)))/(180-50);
-   if (ang > 0)
+   
+   
+
+   vetor_medida_3[11] = vetor_medida_3[10];
+   vetor_medida_3[10] = vetor_medida_3[9];
+   vetor_medida_3[9] = vetor_medida_3[8];
+   vetor_medida_3[8] = vetor_medida_3[7];
+   vetor_medida_3[7] = vetor_medida_3[6];
+   vetor_medida_3[6] = vetor_medida_3[5];
+
+   vetor_medida_3[5] = vetor_medida_3[4];
+   vetor_medida_3[4] = vetor_medida_3[3];
+   vetor_medida_3[3] = vetor_medida_3[2];
+   vetor_medida_3[2] = vetor_medida_3[1];
+   vetor_medida_3[1] = vetor_medida_3[0];
+   vetor_medida_3[0] = distancia_em_mm;
+
+   int medida ;
+   int d_zero = 94;
+   int k = 8/100;
+   int ang;
+   int tipo_controle = 1;
+   if (tipo_controle==0){
+      k = 8/100;
+      medida = distancia_em_mm;
+   }   
+   if (tipo_controle==1){
+      k = 8/100;
+      medida = (vetor_medida_3[0] + vetor_medida_3[1] + vetor_medida_3[2] + vetor_medida_3[3] + vetor_medida_3[4] + vetor_medida_3[5])/6 ;
+      ang = (medida-d_zero)*k;
+   }   
+   if (tipo_controle==2){
+      k = 100/100;
+      medida = (vetor_medida_3[0] + vetor_medida_3[1] + vetor_medida_3[2] + vetor_medida_3[3] + vetor_medida_3[4] + vetor_medida_3[5])/6 
+             - (vetor_medida_3[6] + vetor_medida_3[7] + vetor_medida_3[8] + vetor_medida_3[9] + vetor_medida_3[10] + vetor_medida_3[11])/6;
+      ang = (medida-d_zero)*k;
+   }   
+
+
+
+   c = ',';
+   int j = 0;
+   for (j =0;j <medida; j++)
    {
+      uart_putc(c);
+   }
+   c = '\n';
+   uart_putc(c);
+
+
+
+
+   if (ang > 5)
+   {
+      c = '_';
+      uart_putc(c);
       c = '_';
       uart_putc(c);
       c = '_';
@@ -159,18 +226,81 @@ int printa_1_o_por_ms(int q)
       uart_putc(c);
       c = 'O';
       uart_putc(c);
+      c = '\n';
+
+      uart_putc(c);
+      c = ' ';
+      uart_putc(c);
+      c = ' ';
+      uart_putc(c);
+      c = 'V';
+      uart_putc(c);
+      c = ' ';
+      uart_putc(c);
+      c = ' ';
+      uart_putc(c);
+      c = '\n';
+      uart_putc(c);
    }
-   if (ang < 0)
+   if (ang < -5)
    {
       c = 'O';
       uart_putc(c);
-      c = '_';
+      c = ' ';
       uart_putc(c);
       c = '_';
       uart_putc(c);
       c = '_';
+      uart_putc(c);
+      c = '_';
+      uart_putc(c);
+      c = '\n';
+
+      uart_putc(c);
+      c = ' ';
+      uart_putc(c);
+      c = ' ';
+      uart_putc(c);
+      c = 'V';
+      uart_putc(c);
+      c = ' ';
+      uart_putc(c);
+      c = ' ';
+      uart_putc(c);
+      c = '\n';
       uart_putc(c);
    }
+   if ((ang >= -5) && (ang <= 5))
+   {
+      c = '_';
+      uart_putc(c);
+      c = '_';
+      uart_putc(c);
+      c = 'V';
+      uart_putc(c);
+      c = '_';
+      uart_putc(c);
+      c = '_';
+      uart_putc(c);
+      c = '\n';
+
+      uart_putc(c);
+      c = ' ';
+      uart_putc(c);
+      c = ' ';
+      uart_putc(c);
+      c = 'V';
+      uart_putc(c);
+      c = ' ';
+      uart_putc(c);
+      c = ' ';
+      uart_putc(c);
+      c = '\n';
+      uart_putc(c);
+   }
+
+
+
 
    if (ang > 90)
    {
@@ -185,15 +315,8 @@ int printa_1_o_por_ms(int q)
       return  periodo_alto_pwm_em_micro_segundos_dado_angulo(9900);
    }
 
+
+
+
    return periodo_alto_pwm_em_micro_segundos_dado_angulo(ang);
-
-
-   if (distancia_em_mm > 90)
-   {
-      return  periodo_alto_pwm_em_micro_segundos_dado_angulo(90);
-   }
-   if (distancia_em_mm < 80)
-   {
-      return  periodo_alto_pwm_em_micro_segundos_dado_angulo(-90);
-   }
 }
