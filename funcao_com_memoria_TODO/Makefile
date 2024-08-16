@@ -24,7 +24,7 @@ OPTS = -march=armv7-a -mtune=cortex-a7 -g
 OBJ = $(FONTES:.s=.o)
 OBJETOS = $(OBJ:.c=.o)
 
-all: ${EXEC} ${IMAGE} ${LIST}
+all: ${EXEC} ${IMAGE} ${LIST} ${HEXFILE}
 
 #
 # Gerar executável
@@ -78,15 +78,6 @@ ocd:
 	fi
 
 #
-# Iniciar gdb
-#
-gdb: ${EXEC}
-	gdb-multiarch -ex "set architecture arm" \
-		           -ex "target extended-remote :3333" \
-					  -ex "load" \
-					  ${EXEC}
-
-#
 # Enviar arquivo ao bootloader
 #
 load: ${HEXFILE}
@@ -98,6 +89,20 @@ load: ${HEXFILE}
 stop:
 	-pkill openocd
 	-pkill gdb-multiarch
+
+# Alvo: iniciar qemu
+qemu: ${EXEC}
+	@if lsof -Pi :1234 >/dev/null ; then\
+		echo "qemu já está executando"; \
+	else qemu-system-arm -s -M virt -kernel ${EXEC} & \
+	fi
+
+# Alvo: iniciar gdb
+gdb: ${EXEC}
+	gdb-multiarch -ex "set architecture arm"\
+		-ex "target extended-remote :1234" \
+		-ex "load" \
+		${EXEC}
 
 rebuild: clean all
 

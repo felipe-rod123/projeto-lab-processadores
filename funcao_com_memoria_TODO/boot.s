@@ -40,7 +40,7 @@ trava:
 core0:
   /*
    * configura os stack pointers
-   */
+   */ 
   mov r0, #0xD2     // Modo IRQ
   msr cpsr_c,r0
   mov sp, #0x4000
@@ -49,18 +49,35 @@ core0:
   msr cpsr_c,r0
   mov sp, #0x8000
 
-  // Continua executando no modo supervisor (SVC), interrupções desabilitadas
+  mov r0, #0xD0     // Modo usuario
+  msr cpsr_c,r0
+  ldr sp, =inicio_stack
 
+  // Continua executando no modo supervisor (SVC), interrupções desabilitadas
+   /*
+    * Zera segmento BSS
+    */
+   ldr r0, =bss_begin
+   ldr r1, =bss_end
+   mov r2, #0
+   
+loop_bss:
+   cmp r0, r1
+   bge done_bss
+   strb r2, [r0], #1
+   b loop_bss
+
+done_bss:
   /*
    * Executa o sistema
    */
-  b main_codigo:
+  b main_codigo
 
 /*
  * Suspende o processamento por um número de ciclos
  * param r0 Número de ciclos.
  */
- .text
+.text
 .globl delay
 delay:
   subs r0, r0, #1
@@ -94,28 +111,39 @@ get_cpsr:
   mov pc, lr
 
 main_codigo:
+  bl uart_init
   mov r0, #90 // le 90
   push {r1-r11, lr}  
   bl media_de_d
   pop {r1-r11, lr}
-
   mov r9 , r0 // valor esperado media_de_d(90) =  (0 + 0 +90)/3 = 30  
-  //...
+  //...0
+  mov r0, #15000
+  bl delay
+  mov r0, r9
+  bl uart_putc 
 
-  mov r0, #90 // le 60
+  mov r0, #60 // le 60
   push {r1-r11, lr}  
   bl media_de_d
   pop {r1-r11, lr}
 
   mov r9 , r0 // valor esperado media_de_d(90) =  (0 + 60 +90)/3 = 50
 
+  mov r0, #15000
+  bl delay
+  mov r0, r9
+  bl uart_putc
 
-  mov r0, #130 // le 75
+  mov r0, #75 // le 75
   push {r1-r11, lr}  
   bl media_de_d
   pop {r1-r11, lr}
 
   mov r9 , r0 // valor esperado media_de_d(90) =  (75 + 60 +90)/3 = 75
 
-
+  mov r0, #15000
+  bl delay
+  mov r0, r9
+  bl uart_putc
 

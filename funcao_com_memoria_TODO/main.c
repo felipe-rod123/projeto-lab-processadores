@@ -1,9 +1,12 @@
 
 #include <stdint.h>
 #include "bcm.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 char msg[] = "Hello\r\n";
-
+int vetor_medida[3]={0,0,0};
 void delay(uint32_t dur);
 
 /**
@@ -37,6 +40,7 @@ void uart_init(void) {
    MU_REG(mcr) = 0;
    MU_REG(baud) = 270;        // para 115200 bps em 250 MHz
    MU_REG(cntl) = 3;          // habilita TX e RX
+
 }
 
 /**
@@ -67,12 +71,25 @@ uint8_t uart_getc(void) {
    return MU_REG(io);
 }
 
-/**
- * Ponto de entrada do programa.
- * Pisca led e cumprimenta o usuário pela uart.
- */
 
-int media_de_de(int d)
-{
-   //TODO! MUDAR AQUI 
+// int angulo_do_motor(int distancia){
+// float angulo; //angulo a ser colocado no PWM
+// float Kc; //ganho para conversão
+// int distancia_equilibrio; //distancia de equilibrio ao sensor
+
+// angulo = Kc*(distancia-distancia_equilibrio);
+
+// return angulo;
+// }
+
+int media_de_d(int medida){
+   vetor_medida[2]=vetor_medida[1];
+   vetor_medida[1]=vetor_medida[0];
+   vetor_medida[0]=medida;
+   int media = 0;
+   for(int i=0;i<3;i++){
+      media += vetor_medida[i];
+   }
+   media = media/3;
+   return media;
 }
