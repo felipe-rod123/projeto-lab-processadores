@@ -26,7 +26,7 @@ Para reproduzir este projeto, siga as instruções abaixo:
 
 1. Conecte o sensor ultrassônico e o servomotor PWM ao Raspberry Pi 3, seguindo as especificações do fabricante.
 2. Clone o repositório do projeto em seu Raspberry Pi 3.
-3. Compile e execute o código bare metal fornecido no repositório.
+3. Compile e execute o código bare metal fornecido na pasta MAIN_controlador_regulado_configuravel repositório.
 4. Ajuste as configurações do sistema, se necessário, para otimizar o equilíbrio da bolinha.
 5. Teste o sistema, verificando se a bolinha se mantém equilibrada no braço.
 
