@@ -183,7 +183,7 @@ int controle(int largura_echo_em_micro_segundos)
    int d_zero = 94;
    int k = 8/100;
    int ang;
-   int tipo_controle = 1;
+   int tipo_controle = 0;
    if (tipo_controle==0){
       k = 8/100;
       medida = distancia_em_mm;
@@ -194,10 +194,10 @@ int controle(int largura_echo_em_micro_segundos)
       ang = (medida-d_zero)*k;
    }   
    if (tipo_controle==2){
-      k = 100/100;
+      k = 60/100;
       medida = (vetor_medida_3[0] + vetor_medida_3[1] + vetor_medida_3[2] + vetor_medida_3[3] + vetor_medida_3[4] + vetor_medida_3[5])/6 
              - (vetor_medida_3[6] + vetor_medida_3[7] + vetor_medida_3[8] + vetor_medida_3[9] + vetor_medida_3[10] + vetor_medida_3[11])/6;
-      ang = (medida-d_zero)*k;
+      ang = (medida)*k;
    }   
 
 
