@@ -103,7 +103,7 @@ get_cpsr:
 
 main_codigo:
 
-   bl uart_init 
+   bl uart
    // configurar GPIO 21 como saída
    ldr r0, =GPFSEL2
    ldr r1, [r0]
@@ -161,7 +161,6 @@ main_codigo:
 
 
 escuta:
-//bl printa_oi
 
 //    condicao: tempo == r1
    str r1, [r8] 
@@ -222,10 +221,6 @@ escuta:
 
    ativou_20: 
 
-     push {r0-r11, lr}
-     mov r0, #10
-     bl printa_oi
-     pop {r0-r11, lr}
 
       ldr r0, =0x3F003000
       ldr r9,[r0,#4] // r9 = t
@@ -284,10 +279,6 @@ escuta:
 
    desativou_20: 
 
-     push {r0-r11, lr}
-     mov r0, #10
-     bl printa_oi
-     pop {r0-r11, lr}
       
       ldr r0, =0x3F003000 
       ldr r4,[r0,#4] // R4 = T 

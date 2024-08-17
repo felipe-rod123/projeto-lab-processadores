@@ -1,0 +1,119 @@
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.init           0x00008000       0x5c
+ *(.init)
+ .init          0x00008000       0x5c boot.o
+                0x00008000                start
+
+.text           0x0000805c      0xe80
+ *(.text)
+ .text          0x0000805c      0xb20 main.o
+                0x0000805c                uart_init
+                0x00008164                init
+                0x00008238                uart_putc
+                0x00008288                uart_puts
+                0x000082d8                uart_getc
+                0x0000831c                periodo_alto_pwm_em_micro_segundos_dado_angulo
+                0x00008394                distancia_em_mm_dada_duracao_echo
+                0x000083fc                controle
+ .text          0x00008b7c      0x360 boot.o
+                0x00008b7c                delay
+                0x00008b88                enable_irq
+                0x00008bb0                get_cpsr
+
+.glue_7         0x00008edc        0x0
+ .glue_7        0x00008edc        0x0 linker stubs
+
+.glue_7t        0x00008edc        0x0
+ .glue_7t       0x00008edc        0x0 linker stubs
+
+.vfp11_veneer   0x00008edc        0x0
+ .vfp11_veneer  0x00008edc        0x0 linker stubs
+
+.v4_bx          0x00008edc        0x0
+ .v4_bx         0x00008edc        0x0 linker stubs
+
+.iplt           0x00008edc        0x0
+ .iplt          0x00008edc        0x0 main.o
+
+.rel.dyn        0x00008edc        0x0
+ .rel.iplt      0x00008edc        0x0 main.o
+                0x00008ee0                        . = ALIGN (0x8)
+                0x00008ee0                        rodata_begin = .
+
+.rodata
+ *(.rodata)
+                0x00008ee0                        rodata_end = .
+                0x00008ee0                        . = ALIGN (0x8)
+                0x00008ee0                        data_begin = .
+
+.data           0x00008ee0       0x38
+ *(.data)
+ .data          0x00008ee0       0x38 main.o
+                0x00008ee0                msg
+                0x00008ee8                vetor_medida_3
+ .data          0x00008f18        0x0 boot.o
+
+.igot.plt       0x00008f18        0x0
+ .igot.plt      0x00008f18        0x0 main.o
+                0x00008f18                        . = ALIGN (0x8)
+                0x00008f18                        bss_begin = .
+
+.bss            0x00008f18        0x0
+ *(.bss*)
+ .bss           0x00008f18        0x0 main.o
+ .bss           0x00008f18        0x0 boot.o
+                0x00008f18                        bss_end = .
+LOAD main.o
+LOAD boot.o
+OUTPUT(kernel.elf elf32-littlearm)
+LOAD linker stubs
+
+.debug_info     0x00000000      0x3fb
+ .debug_info    0x00000000      0x3d9 main.o
+ .debug_info    0x000003d9       0x22 boot.o
+
+.debug_abbrev   0x00000000      0x1e7
+ .debug_abbrev  0x00000000      0x1d5 main.o
+ .debug_abbrev  0x000001d5       0x12 boot.o
+
+.debug_aranges  0x00000000       0x48
+ .debug_aranges
+                0x00000000       0x20 main.o
+ .debug_aranges
+                0x00000020       0x28 boot.o
+
+.debug_line     0x00000000      0x4ed
+ .debug_line    0x00000000      0x3a6 main.o
+ .debug_line    0x000003a6      0x147 boot.o
+
+.debug_str      0x00000000      0x2b3
+ .debug_str     0x00000000      0x2b3 main.o
+                                0x2e7 (size before relaxing)
+ .debug_str     0x000002b3       0x60 boot.o
+
+.comment        0x00000000       0x26
+ .comment       0x00000000       0x26 main.o
+                                 0x27 (size before relaxing)
+
+.ARM.attributes
+                0x00000000       0x2f
+ .ARM.attributes
+                0x00000000       0x2f main.o
+ .ARM.attributes
+                0x0000002f       0x1a boot.o
+
+.debug_frame    0x00000000      0x110
+ .debug_frame   0x00000000      0x110 main.o
+
+.debug_ranges   0x00000000       0x20
+ .debug_ranges  0x00000000       0x20 boot.o

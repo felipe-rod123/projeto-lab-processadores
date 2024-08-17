@@ -9,19 +9,8 @@ void delay(uint32_t dur);
 /**
  * Configura a mini-uart para 115200
  */
+
 void uart_init(void) {
-   vetor_medida_3[0] = 90;
-   vetor_medida_3[1] = 90;
-   vetor_medida_3[2] = 90;
-   vetor_medida_3[3] = 90;
-   vetor_medida_3[4] = 90;
-   vetor_medida_3[5] = 90;
-   vetor_medida_3[6] = 90;
-   vetor_medida_3[7] = 90;
-   vetor_medida_3[8] = 90;
-   vetor_medida_3[9] = 90;
-   vetor_medida_3[10] = 90;
-   vetor_medida_3[11] = 90;
 
    /*
     * Configura os GPIO 14 e 15 com a função alternativa 2 (UART).
@@ -51,6 +40,25 @@ void uart_init(void) {
    MU_REG(baud) = 270;        // para 115200 bps em 250 MHz
    MU_REG(cntl) = 3;          // habilita TX e RX
 }
+
+ void init(void)
+ {
+   vetor_medida_3[0] = 90;
+   vetor_medida_3[1] = 90;
+   vetor_medida_3[2] = 90;
+   vetor_medida_3[3] = 90;
+   vetor_medida_3[4] = 90;
+   vetor_medida_3[5] = 90;
+   vetor_medida_3[6] = 90;
+   vetor_medida_3[7] = 90;
+   vetor_medida_3[8] = 90;
+   vetor_medida_3[9] = 90;
+   vetor_medida_3[10] = 90;
+   vetor_medida_3[11] = 90;
+
+   uart_init();
+ }
+
 
 /**
  * Envia um caractere pela uart.
@@ -82,10 +90,6 @@ uint8_t uart_getc(void) {
 
 
 
-void printa_oi(int q) {
-   
-   return ;
-}
 
    
 

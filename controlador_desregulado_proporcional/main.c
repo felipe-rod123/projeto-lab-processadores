@@ -69,22 +69,6 @@ uint8_t uart_getc(void) {
 
 
 
-
-   
-void printa_oi(int q) {
-   return ;
-   uint8_t c = 'o';
-   int i = 0;
-   for (i =0;i <q; i++)
-   {
-      uart_putc(c);
-   }
-   c = '\n';
-   uart_putc(c);
-   return ;
-}
-
-
 int periodo_alto_pwm_em_micro_segundos_dado_angulo(int angulo_em_graus)
 {
    // ang max em graus = 90; 
@@ -118,11 +102,11 @@ int distancia_em_mm_dada_duracao_echo(int duracao_echo_em_micro_segundos)
 
 
 
-int printa_1_o_por_ms(int q) 
+int recebe_duracao_echo_devolve_duracao_alta_pwm(int duracao_echo) 
 {
    uint8_t c = '.';
    int i = 0;
-   int distancia_em_mm =  distancia_em_mm_dada_duracao_echo(q);
+   int distancia_em_mm =  distancia_em_mm_dada_duracao_echo(duracao_echo);
    for (i =0;i <=distancia_em_mm; i+=1) // 1000
    {
       uart_putc(c);
