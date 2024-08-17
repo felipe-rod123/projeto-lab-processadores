@@ -5,10 +5,15 @@
 Este projeto consiste na criação de um controlador utilizando um Raspberry Pi 3 e programação bare metal para controlar um servomotor PWM, que por sua vez está ligado a um sensor ultrassônico. O objetivo do sistema é manter o equilíbrio de uma bolinha posicionada em um braço, formando um sistema de equilíbrio de um único eixo.
 ## Pastas do repositório
 Cada pasta corresponde a uma etapa do projeto. Ela pode ajudar na depuração de elementos específicos, nessa ordem:
+
 lê ultrassônico e coloca na uart: UART + SENSOR ULTRASSONICO
+
 double_pwm: LEDS / MOTOR
+
 calcula_largura_de_borda: LEDS + ENTRADA DE SINAL + SYSTEM TIMER
+
 controlador_desregulado: MOTOR + ENTRADA DE SINAL + SYSTEM TIMER + SENSOR ULTRASSONICO
+
 MAIN_controlador_regulado_configuravel: MOTOR + ENTRADA DE SINAL + SYSTEM TIMER + SENSOR ULTRASSONICO + UART + CONTROLE POR DERIVADA+ CALIBRAÇÃO (TUDO)
 
 
